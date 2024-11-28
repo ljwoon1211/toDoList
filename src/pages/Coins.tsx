@@ -72,6 +72,11 @@ export default function Coins(){
   //   },
   // ]
 
+  const Loader = styled.span`
+    text-align: center;
+    display: block;
+  `
+
   interface CoinInterface {
       id: string,
       name: string,
@@ -83,6 +88,8 @@ export default function Coins(){
   }
 
   const [coins, setCoins]= useState<CoinInterface[]>([])
+  const [loading,setLoading]= useState<boolean>(true)
+
   useEffect(()=>{
     (async()=>{
       const response = await fetch("https://api.coinpaprika.com/v1/coins")
@@ -97,9 +104,15 @@ export default function Coins(){
       <Header>
         <Title>코인들입니다.</Title>
       </Header>
+      {
+        loading ? 
+          <Loader>"loading"</Loader>
+        :
+      (
       <CoinsList>
         {coins.map((coin)=><Coin key={coin.id}><Link to={`btc/${coin.id}`}>{coin.name} &rarr;</Link></Coin>)}
       </CoinsList>
+      )}
     </Container>
   )
 }
