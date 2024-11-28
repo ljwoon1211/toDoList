@@ -7,7 +7,7 @@ import Chart from "./Chart";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinInfo, fetchTickerInfo } from "../services/api";
-
+import {Helmet} from "react-helmet"
 const Container =styled.div`
     padding: 0px 20px;
     max-width: 480px;
@@ -141,7 +141,8 @@ export default function Coin(){
   console.log("Price Match:", priceMatch);
   const { isLoading:infoLoading, data:infoData } = useQuery<InfoData>({
     queryKey: ["info",coinId], 
-    queryFn: () => fetchCoinInfo(coinId) 
+    queryFn: () => fetchCoinInfo(coinId),
+    refetchInterval: 5 * 1000  
   })
 
   const { isLoading:tickersLoading, data:tickersData } = useQuery<PriceData>({
@@ -158,8 +159,13 @@ export default function Coin(){
   
   return  (
   <Container>
+    <Helmet>
+    <Title>
+        {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+      </Title>    
+    </Helmet>
     <Header>
-      <Title>
+    <Title>
         {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
       </Title>    
     </Header>
@@ -177,8 +183,8 @@ export default function Coin(){
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+            <span>Price:</span>
+            <span>${tickersData?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>

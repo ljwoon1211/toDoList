@@ -23,6 +23,7 @@ export default function Chart(){
   const { isLoading, data, error } = useQuery<IHistorical[]>({
     queryKey: ["ohlck",coinId], 
     queryFn: () => fetchCoinHistory(coinId),
+    refetchInterval: 10 * 1000  
   })
 
   if (isLoading) {
