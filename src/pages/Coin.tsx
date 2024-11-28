@@ -134,10 +134,11 @@ export default function Coin(){
     // react-route-dom으로 상태 보내기
   const {state} = useLocation();
 
+  const priceMatch = useMatch(`btc/${coinId}/price`);
+  const chartMatch = useMatch(`btc/${coinId}/chart`);
 
-  const priceMatch = useMatch("price");
-  const chartMatch = useMatch("chart");
-
+  console.log("Chart Match:", chartMatch);  // 이 로그를 통해 실제 반환값 확인
+  console.log("Price Match:", priceMatch);
   const { isLoading:infoLoading, data:infoData } = useQuery<InfoData>({
     queryKey: ["info",coinId], 
     queryFn: () => fetchCoinInfo(coinId) 
@@ -149,6 +150,10 @@ export default function Coin(){
   })
 
   const loading = infoLoading || tickersLoading;
+
+  if(!coinId){
+    return (<p>코인 아이디가 없습니다.</p>)
+  }
 
   
   return  (
@@ -179,7 +184,7 @@ export default function Coin(){
           <Description>{infoData?.description}</Description>
           <Overview>
             <OverviewItem>
-              <span>Total Suply:</span>
+              <span>Total Supply:</span>
               <span>{tickersData?.total_supply}</span>
             </OverviewItem>
             <OverviewItem>
@@ -189,10 +194,14 @@ export default function Coin(){
           </Overview>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-            <Link to="chart">Chart</Link>
+              <Link to="chart">
+                  Chart
+              </Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
-            <Link to="price">Price</Link>
+              <Link to="price">
+                  Price
+              </Link>
             </Tab>
           </Tabs>
 
