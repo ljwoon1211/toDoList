@@ -20,8 +20,8 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={true} />
-      </ThemeProvider>
+        {process.env.REACT_APP_ENV === "development" && <ReactQueryDevtools initialIsOpen={true} />}
+      </ThemeProvider>      
     </QueryClientProvider>
   </React.StrictMode>
 );

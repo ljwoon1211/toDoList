@@ -16,12 +16,21 @@ const Container =styled.div`
 
 const Header = styled.header`
   height: 10vh;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
   align-items: center;
+  a{
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    color:${props=>props.theme.textColor};
+    padding: 5px;
+    width: max-content;
+  }
 `;
 
 const Title =  styled.h1`
+  text-align: center;
+
   font-size: 48px;
   color:${props=>props.theme.accentColor};
 `;
@@ -142,7 +151,7 @@ export default function Coin(){
   const { isLoading:infoLoading, data:infoData } = useQuery<InfoData>({
     queryKey: ["info",coinId], 
     queryFn: () => fetchCoinInfo(coinId),
-    refetchInterval: 5 * 1000  
+    // refetchInterval: 5 * 1000  
   })
 
   const { isLoading:tickersLoading, data:tickersData } = useQuery<PriceData>({
@@ -160,13 +169,16 @@ export default function Coin(){
   return  (
   <Container>
     <Helmet>
-    <Title>
+      <Title>
         {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
       </Title>    
     </Helmet>
     <Header>
-    <Title>
+      <Link to="/">Home</Link>
+      <Title>
+        {/* {coinId} */}
         {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+
       </Title>    
     </Header>
     {loading ? (

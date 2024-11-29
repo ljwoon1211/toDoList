@@ -4,7 +4,7 @@ import { fetchCoinHistory } from "../services/api";
 import { useQuery } from "@tanstack/react-query";
 import ReactApexChart from "react-apexcharts";
 
-interface IHistorical{
+export interface IHistorical{
   time_open: string;
   time_close: string;
   open: number;
@@ -23,7 +23,7 @@ export default function Chart(){
   const { isLoading, data, error } = useQuery<IHistorical[]>({
     queryKey: ["ohlck",coinId], 
     queryFn: () => fetchCoinHistory(coinId),
-    refetchInterval: 10 * 1000  
+    // refetchInterval: 10 * 1000  
   })
 
   if (isLoading) {
