@@ -49,6 +49,8 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+],{
+  basename: "/crypto-tracker", // 저장소 이름 추가
+});
 
 export default router;
