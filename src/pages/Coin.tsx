@@ -143,7 +143,6 @@ export default function Coin(){
   const {coinId} = useParams()
     // react-route-dom으로 상태 보내기
   const {state} = useLocation();
-  const {toggleDark,isDark} = useOutletContext<ToggleDarkType>()
 
   const priceMatch = useMatch(`btc/${coinId}/price`);
   const chartMatch = useMatch(`btc/${coinId}/chart`);
@@ -225,7 +224,7 @@ export default function Coin(){
             </Tab>
           </Tabs>
 
-          <Outlet context={{ toggleDark, isDark }}/>
+          <Outlet />
         </>
       )}
     </Container>

@@ -7,6 +7,7 @@ import router from './Router';
 import { ThemeProvider } from 'styled-components';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { RecoilRoot } from 'recoil';
 
 const queryClient = new QueryClient()
 
@@ -16,10 +17,12 @@ const root = ReactDOM.createRoot(rootElement);
 
 root.render(
   <React.StrictMode>
+    <RecoilRoot>
     <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
         {process.env.REACT_APP_ENV === "development" && <ReactQueryDevtools initialIsOpen={true} />}
     </QueryClientProvider>
+    </RecoilRoot>
   </React.StrictMode>
 );
 
