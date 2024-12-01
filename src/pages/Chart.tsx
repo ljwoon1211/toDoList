@@ -1,8 +1,9 @@
 import React from "react"
-import { useParams } from "react-router-dom"
+import { useOutletContext, useParams } from "react-router-dom"
 import { fetchCoinHistory } from "../services/api";
 import { useQuery } from "@tanstack/react-query";
 import ReactApexChart from "react-apexcharts";
+import { ToggleDarkType } from "./Coins";
 
 export interface IHistorical{
   time_open: string;
@@ -19,6 +20,7 @@ export interface IHistorical{
 
 export default function Chart(){
   const { coinId } = useParams<{ coinId: string }>();
+  const {toggleDark,isDark} = useOutletContext<ToggleDarkType>()
 
   const { isLoading, data, error } = useQuery<IHistorical[]>({
     queryKey: ["ohlck",coinId], 
@@ -50,7 +52,7 @@ export default function Chart(){
         ]}
         options={{
           theme: {
-            mode: "dark",
+            mode: isDark? "dark": "light",
           },
           chart: {
             height: 300,

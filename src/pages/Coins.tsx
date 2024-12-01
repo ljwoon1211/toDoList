@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { useParams } from "react-router-dom"
 import styled from "styled-components"
 import { fetchCoins } from "../services/api";
@@ -19,7 +19,7 @@ const Header = styled.header`
 const CoinsList = styled.ul``;
 const Coin = styled.li`
   background-color:white;
-  color:${props=>props.theme.bgColor};
+  color:${props=>props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
   a{
@@ -58,9 +58,14 @@ interface ICoin {
     type: string,
 }
 
+export interface ToggleDarkType {
+  toggleDark: () => void;
+  isDark:boolean;
+}
 
 export default function Coins(){
   // const queryClient = useQueryClient()
+  const {toggleDark,isDark} = useOutletContext<ToggleDarkType>()
 
   const { isLoading, data }= useQuery<ICoin[]>({
     queryKey: ["allCoins"], 
@@ -86,6 +91,8 @@ export default function Coins(){
       </Helmet>
       <Header>
         <Title>코인들입니다.</Title>
+        <button onClick={toggleDark}>Toggle Mode</button>
+
       </Header>
       {
         isLoading ? 

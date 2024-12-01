@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Outlet, Route, Routes, useMatch } from "react-router-dom";
+import { Outlet, Route, Routes, useMatch, useOutletContext } from "react-router-dom";
 import { useLocation, useParams } from "react-router-dom"
 import styled from "styled-components";
 import Price from "./Price";
@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinInfo, fetchTickerInfo } from "../services/api";
 import {Helmet} from "react-helmet"
+import { ToggleDarkType } from "./Coins";
 const Container =styled.div`
     padding: 0px 20px;
     max-width: 480px;
@@ -142,6 +143,7 @@ export default function Coin(){
   const {coinId} = useParams()
     // react-route-dom으로 상태 보내기
   const {state} = useLocation();
+  const {toggleDark,isDark} = useOutletContext<ToggleDarkType>()
 
   const priceMatch = useMatch(`btc/${coinId}/price`);
   const chartMatch = useMatch(`btc/${coinId}/chart`);
@@ -165,7 +167,7 @@ export default function Coin(){
     return (<p>코인 아이디가 없습니다.</p>)
   }
 
-  
+
   return  (
   <Container>
     <Helmet>
@@ -223,7 +225,7 @@ export default function Coin(){
             </Tab>
           </Tabs>
 
-          <Outlet/>
+          <Outlet context={{ toggleDark, isDark }}/>
         </>
       )}
     </Container>

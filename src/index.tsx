@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { theme } from './theme';
 import { RouterProvider } from 'react-router';
 import router from './Router';
 import { ThemeProvider } from 'styled-components';
@@ -18,10 +17,8 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
         <RouterProvider router={router} />
         {process.env.REACT_APP_ENV === "development" && <ReactQueryDevtools initialIsOpen={true} />}
-      </ThemeProvider>      
     </QueryClientProvider>
   </React.StrictMode>
 );
