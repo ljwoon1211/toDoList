@@ -24,6 +24,7 @@ export default function Categories(){
 
   const handleAddClick = () =>{
     setCategories(prev=> [...prev,addCategory])
+    setAddCategory('')
   }
 
   const handleEditClick = (category:string) =>{
