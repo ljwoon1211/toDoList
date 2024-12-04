@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RecoilRoot } from 'recoil';
+import { darkTheme } from './theme';
 
 const queryClient = new QueryClient()
 
@@ -18,10 +19,14 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <RecoilRoot>
+    <ThemeProvider theme={darkTheme}>
+
     <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
         {process.env.REACT_APP_ENV === "development" && <ReactQueryDevtools initialIsOpen={true} />}
     </QueryClientProvider>
+    </ThemeProvider>
+
     </RecoilRoot>
   </React.StrictMode>
 );
